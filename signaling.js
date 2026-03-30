@@ -1,4 +1,4 @@
-const WebSocket = require("ws");
+const WebSocket = from ("ws");
 
 // Local or cloud version: port 8080 for local testing
 const wss = new WebSocket.Server({ port: 8080 });
