@@ -66,6 +66,31 @@ wss.on("connection", (ws) => {
       room.browserWS.send(JSON.stringify(data));
     }
   });
+  
+  //5. CLEAN UP ROOM WHEN DEVICE DISCONNECTS
+
+  ws.on("close", () => {
+    const id = ws.deviceId;
+    if (!id) return;   // not in a room
+
+    const room = rooms[id];
+    if (!room) return;
+
+    console.log("Connection closed:", id);
+
+    // If the device disconnected → delete entire room
+    if (room.deviceWS === ws) {
+      console.log("Device disconnected. Removing room:", id);
+      delete rooms[id];
+    }
+
+    // If browser disconnected → just remove browserWS
+    if (room.browserWS === ws) {
+      console.log("Browser left room:", id);
+      room.browserWS = null;
+    }
+  });
+
 });
 
 console.log("Signaling server running on port", PORT);
