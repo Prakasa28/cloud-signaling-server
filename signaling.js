@@ -1,7 +1,8 @@
-const WebSocket = from ("ws");
+import { WebSocketServer } from "ws";
+
 
 // Local or cloud version: port 8080 for local testing
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocketServer({ port: 8080 });
 
 // Rooms: deviceId(MAC) -> { deviceWS, browserWS }
 const rooms = {};
